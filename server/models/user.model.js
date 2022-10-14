@@ -5,7 +5,7 @@ const userSchema = new Schema({
     fatherName: { type: String, required: [true, "Father name is required!"] },
     motherName: { type: String, required: [true, "Mather name is required!"] },
     address: { type: String, required: [true, "Address name is required!"] },
-    issueDate: { type: Date, required: [true, "Issue Date is required!"] },
+    issueDate: { type: String, required: [true, "Issue Date is required!"] },
 })
 
 module.exports = model("User", userSchema, 'users')
