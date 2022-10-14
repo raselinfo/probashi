@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
+import { Store } from '../Store/Store';
 
 const Dashboard = () => {
     const date = new Date()
     const currentDate = `${date.toLocaleDateString()}`
+    const {user}=useContext(Store)
     const createProbashi = (e) => {
         e.preventDefault()
     }
+
+  
     return (
         <section>
             <h1 className='dashboard__heading'>আমি  প্রবাসী 🥰</h1>
