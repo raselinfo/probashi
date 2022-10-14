@@ -17,6 +17,12 @@ const Dashboard = () => {
         address: "",
         issueDate: currentDate
     })
+
+    // Copy Text Handler
+    const copyTextHandler = () => {
+        navigator.clipboard.writeText(userLink.trim())
+    }
+
     const createProbashi = async (e) => {
         e.preventDefault()
         setLoading(true)
@@ -88,8 +94,8 @@ const Dashboard = () => {
                         মোট প্রবাসীঃ {totalUser} জন
                     </div>
                     {/* User Link */}
-                    {userLink && (<> <a href={{ userLink }} className="user__link mr-3">View Link</a>
-                        <button className="copy__link btn btn-success">Copy Link</button>
+                    {userLink && (<> <a rel="noreferrer" target={"_blank"} href={ userLink } className="user__link mr-3">View Link</a>
+                        <button onClick={copyTextHandler} className="copy__link btn btn-success">Copy Link</button>
                         <hr /></>)}
                     <h2 className='probashi_form_heading'>প্রবাসী রেজিস্ট্রেশন</h2>
                     <form className='createProbashiForm'>
