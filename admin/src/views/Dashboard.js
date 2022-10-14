@@ -1,8 +1,10 @@
 import React, { useContext, useState } from 'react';
 import { Store } from "../Store/Store"
+import { useNavigate } from "react-router-dom"
 const Dashboard = () => {
     const date = new Date()
-    const { user } = useContext(Store)
+    const navigate=useNavigate()
+    const { user, setUser } = useContext(Store)
     const [message, setMessage] = useState("")
     const [loading, setLoading] = useState(false)
     const currentDate = `${date.toLocaleDateString()}`
@@ -20,23 +22,36 @@ const Dashboard = () => {
             return alert("Please fil up all data! ❌")
         }
         try {
-            const response = await fetch(`${process.env.REACT_APP_API}/create-user?${user}`, {
+            const response = await fetch(`${process.env.REACT_APP_API}/create-user?email=${user}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(probashiInfo)
             })
+            const data = await response.json()
+            setMessage(data.message)
+            setLoading(false)
         } catch (err) {
             console.log(err)
+            setMessage(err.message)
+            setLoading(false)
         }
 
     }
-
+    const logOutHandler = () => {
+        localStorage.removeItem("user")
+        setUser(null)
+        navigate("/")
+    }
 
     return (
         <section>
-            <h1 className='dashboard__heading'>আমি  প্রবাসী 🥰</h1>
+            <h1 className='dashboard__heading'>আমি  প্রবাসী 🥰
+                <br />
+                <button onClick={logOutHandler} className='btn btn-danger btn-lg'>Logout</button>
+            </h1>
+
             <div className="mainSection">
 
 
@@ -66,8 +81,9 @@ const Dashboard = () => {
                             <label htmlFor="mother">Issue Date: </label>
                             <span>{" "}{currentDate}</span>
                         </div>
-                        <button className='btn probashi-btn btn-lg' type="submit" onClick={createProbashi}>Create User</button>
+                        <button className='btn probashi-btn btn-lg' type="submit" onClick={createProbashi}>{loading ? "Creating..." : "Create User"}</button>
                     </form>
+                    <p>{message}</p>
                 </div>
             </div>
         </section>

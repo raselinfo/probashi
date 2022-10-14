@@ -1,5 +1,6 @@
 const usersController={
     createUser(req,res){
+        console.log(req.body)
         const {}=req.body
         res.send("Create user Controller")
     },
