@@ -1,6 +1,26 @@
-import React from 'react';
-
+import React, { useEffect, useState } from 'react';
+import { useParams } from "react-router-dom"
 const Home = () => {
+    const { id } = useParams()
+    const [userInof, setUserInfo] = useState(null)
+    const [loading, setLoading] = useState(true)
+    const [message, setMessage] = useState("")
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                setLoading(true)
+                const response = await fetch(`${process.env.REACT_APP_API}/get-user/${id}`)
+                const data = await response.json()
+                console.log(data)
+                setUserInfo(data?.data)
+                setLoading(false)
+            } catch (err) {
+                setMessage(err.message)
+                setLoading(false)
+            }
+        }
+        fetchData()
+    }, [id])
     return (
         <section className="qr_section py-5">
             <div className="container">
@@ -8,9 +28,9 @@ const Home = () => {
                     <div className="col-12">
                         {/* QR button start  */}
                         <div className="certificate_button text-end">
-                          <span className='print-icon font-bold' >
+                            <span className='print-icon font-bold' >
                                 <i className="fa-solid fa-print"></i>
-                          </span>
+                            </span>
                         </div>
                         {/* QR button end  */}
                         {/* Certificate content start */}
