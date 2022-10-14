@@ -1,12 +1,13 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Store } from "../Store/Store"
 import { useNavigate } from "react-router-dom"
 const Dashboard = () => {
     const date = new Date()
-    const navigate=useNavigate()
+    const navigate = useNavigate()
     const { user, setUser } = useContext(Store)
     const [message, setMessage] = useState("")
     const [loading, setLoading] = useState(false)
+    const [totalUser, setTotalUser] = useState(0)
     const currentDate = `${date.toLocaleDateString()}`
     const [probashiInfo, setProbashiInfo] = useState({
         name: "",
@@ -44,6 +45,31 @@ const Dashboard = () => {
         setUser(null)
         navigate("/")
     }
+    // English to Bangla
+    const englishToBangla = (number) => {
+        const banglaNumber = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"]
+        let bangla = ""
+        for (let i = 0; i < number.length; i++) {
+            bangla += banglaNumber[number[i]]
+        }
+        return bangla
+    }
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+
+                const response = await fetch(`${process.env.REACT_APP_API}/get-users?email=${user}`)
+                const data = await response.json()
+                setTotalUser(englishToBangla(data?.data?.toString()))
+
+            } catch (err) {
+                alert(err.message)
+
+            }
+        }
+        fetchData()
+    }, [user])
 
     return (
         <section>
@@ -57,7 +83,7 @@ const Dashboard = () => {
 
                 <div className="createProbashi col-md-6 mx-auto p-sm-5">
                     <div className="totalProbashi mb-5">
-                        মোট প্রবাসীঃ ৫০ জন
+                        মোট প্রবাসীঃ {totalUser} জন
                     </div>
                     <h2 className='probashi_form_heading'>প্রবাসী রেজিস্ট্রেশন</h2>
                     <form className='createProbashiForm'>

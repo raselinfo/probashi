@@ -21,8 +21,15 @@ const usersController = {
             res.status(500).json({ message: err.message })
         }
     },
-    getUsers(req, res) {
-        res.send("Get all users")
+    async getUsers(_req, res) {
+        console.log("hello")
+        try {
+            const users = await User.find()
+            console.log("user", users)
+            res.status(200).json({ data: users.length })
+        } catch (err) {
+            res.status(500).json({ message: err.message })
+        }
     }
 }
 
