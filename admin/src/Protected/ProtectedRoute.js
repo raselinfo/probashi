@@ -1,9 +1,11 @@
-import React from 'react';
-
+import { useContext } from 'react';
+import { Store } from '../Store/Store';
+import { Navigate } from "react-router-dom"
 const ProtectedRoute = ({ children }) => {
-    const admin = JSON.parse(localStorage.getItem("admin"))
-    console.log(admin)
-    // if(!admin.email)
+    const { user } = useContext(Store)
+    if (!user) {
+        return <Navigate to="/" />
+    }
 
     return children
 };
