@@ -5,14 +5,15 @@ services:
     container_name: admin_container
     build: ./admin
     ports:
-      - "3006:3006"
+      - "3006:3000"
     env_file:
       - ./admin/.env
     depends_on:
       - mongo
       - server
     volumes:
-      - ./admin:/user/src/app
+      - ./admin:/user/src/app:ro
+      - /user/src/app/node_modules
   # Client
   client:
     container_name: client_container
@@ -25,7 +26,8 @@ services:
       - mongo
       - server
     volumes:
-      - ./client:/user/src/app
+      - ./client:/user/src/app:ro
+      - /user/src/app/node_modules
   # Server
   server:
     container_name: server_container
@@ -37,7 +39,8 @@ services:
     depends_on:
       - mongo
     volumes:
-      - ./server:/user/src/app
+      - ./server:/user/src/app:ro
+      - /user/src/app/node_modules
   # MOngoDB
   mongo:
     container_name: mongo_container
