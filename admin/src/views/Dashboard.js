@@ -8,6 +8,7 @@ const Dashboard = () => {
     const [message, setMessage] = useState("")
     const [loading, setLoading] = useState(false)
     const [totalUser, setTotalUser] = useState(0)
+    const [userLink, setUserLink] = useState("")
     const currentDate = `${date.toLocaleDateString()}`
     const [probashiInfo, setProbashiInfo] = useState({
         name: "",
@@ -20,7 +21,9 @@ const Dashboard = () => {
         e.preventDefault()
         setLoading(true)
         if (!probashiInfo.name || !probashiInfo.fatherName || !probashiInfo.motherName || !probashiInfo.address || !probashiInfo.issueDate) {
-            return alert("Please fil up all data! ❌")
+            alert("Please fil up all data! ❌")
+            setLoading(false)
+            return
         }
         try {
             const response = await fetch(`${process.env.REACT_APP_API}/create-user?email=${user}`, {
@@ -31,10 +34,10 @@ const Dashboard = () => {
                 body: JSON.stringify(probashiInfo)
             })
             const data = await response.json()
-            setMessage(data.message)
+            setMessage(data?.message)
+            setUserLink(data?.data)
             setLoading(false)
         } catch (err) {
-            console.log(err)
             setMessage(err.message)
             setLoading(false)
         }
@@ -65,7 +68,6 @@ const Dashboard = () => {
 
             } catch (err) {
                 alert(err.message)
-
             }
         }
         fetchData()
@@ -85,6 +87,10 @@ const Dashboard = () => {
                     <div className="totalProbashi mb-5">
                         মোট প্রবাসীঃ {totalUser} জন
                     </div>
+                    {/* User Link */}
+                    {userLink && (<> <a href={{ userLink }} className="user__link mr-3">View Link</a>
+                        <button className="copy__link btn btn-success">Copy Link</button>
+                        <hr /></>)}
                     <h2 className='probashi_form_heading'>প্রবাসী রেজিস্ট্রেশন</h2>
                     <form className='createProbashiForm'>
                         <div>
@@ -110,6 +116,7 @@ const Dashboard = () => {
                         <button className='btn probashi-btn btn-lg' type="submit" onClick={createProbashi}>{loading ? "Creating..." : "Create User"}</button>
                     </form>
                     <p>{message}</p>
+
                 </div>
             </div>
         </section>
