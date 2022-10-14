@@ -21,7 +21,7 @@ db.connect().then(({ connection: { host, port, name } }) => {
 
 // Routes
 app.use("/api", require("./routes/auth.routes"))
-// app.use("/api",require("./routes/user.routes"))
+app.use("/api",require("./routes/user.routes"))
 
 app.get("/health", (_req, res) => {
     res.send("<h1>OK RAsel</h1>")

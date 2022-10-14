@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
-
+import React, { useContext, useState } from 'react';
+import { Store } from "../Store/Store"
 const Dashboard = () => {
     const date = new Date()
+    const { user } = useContext(Store)
+    const [message, setMessage] = useState("")
+    const [loading, setLoading] = useState(false)
     const currentDate = `${date.toLocaleDateString()}`
     const [probashiInfo, setProbashiInfo] = useState({
         name: "",
@@ -10,12 +13,24 @@ const Dashboard = () => {
         address: "",
         issueDate: currentDate
     })
-    const createProbashi = (e) => {
+    const createProbashi = async (e) => {
         e.preventDefault()
+        setLoading(true)
         if (!probashiInfo.name || !probashiInfo.fatherName || !probashiInfo.motherName || !probashiInfo.address || !probashiInfo.issueDate) {
             return alert("Please fil up all data! ❌")
         }
-        console.log(probashiInfo)
+        try {
+            const response = await fetch(`${process.env.REACT_APP_API}/create-user?${user}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(probashiInfo)
+            })
+        } catch (err) {
+            console.log(err)
+        }
+
     }
 
 
