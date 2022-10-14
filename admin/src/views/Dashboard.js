@@ -1,15 +1,24 @@
-import React, { useContext, useEffect } from 'react';
-import { Store } from '../Store/Store';
+import React, { useState } from 'react';
 
 const Dashboard = () => {
     const date = new Date()
     const currentDate = `${date.toLocaleDateString()}`
-    const {user}=useContext(Store)
+    const [probashiInfo, setProbashiInfo] = useState({
+        name: "",
+        fatherName: "",
+        motherName: "",
+        address: "",
+        issueDate: currentDate
+    })
     const createProbashi = (e) => {
         e.preventDefault()
+        if (!probashiInfo.name || !probashiInfo.fatherName || !probashiInfo.motherName || !probashiInfo.address || !probashiInfo.issueDate) {
+            return alert("Please fil up all data! ❌")
+        }
+        console.log(probashiInfo)
     }
 
-  
+
     return (
         <section>
             <h1 className='dashboard__heading'>আমি  প্রবাসী 🥰</h1>
@@ -24,19 +33,19 @@ const Dashboard = () => {
                     <form className='createProbashiForm'>
                         <div>
                             <label htmlFor="name">Name*</label>
-                            <input type="text" name="name" id="name" className='form-control from-control-lg' required />
+                            <input onChange={(e) => setProbashiInfo({ ...probashiInfo, name: e.target.value })} type="text" name="name" id="name" className='form-control from-control-lg' required />
                         </div>
                         <div>
                             <label htmlFor="father">Father's Name*</label>
-                            <input type="text" name="father" id="father" className='form-control from-control-lg' required />
+                            <input onChange={(e) => setProbashiInfo({ ...probashiInfo, fatherName: e.target.value })} type="text" name="father" id="father" className='form-control from-control-lg' required />
                         </div>
                         <div>
                             <label htmlFor="mother">Mother's Name*</label>
-                            <input type="text" name="mother" id="mother" className='form-control from-control-lg' required />
+                            <input onChange={(e) => setProbashiInfo({ ...probashiInfo, motherName: e.target.value })} type="text" name="mother" id="mother" className='form-control from-control-lg' required />
                         </div>
                         <div>
                             <label htmlFor="address">Address*</label>
-                            <textarea className='form-control ' name="address" id="address" rows="5" required></textarea>
+                            <textarea onChange={(e) => setProbashiInfo({ ...probashiInfo, address: e.target.value })} className='form-control ' name="address" id="address" rows="5" required></textarea>
                         </div>
                         <div>
                             <label htmlFor="mother">Issue Date: </label>
