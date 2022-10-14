@@ -7,6 +7,7 @@ const Login = () => {
     }
     return (
         <div className='container py-5 my-5'>
+            <h2 className="login__heading">আমি প্রবাসীতে স্বাগতম</h2>
             <div className="col-md-6 mx-auto login-form">
                 <form>
                     <input type="email" placeholder="Enter Yor Email" className='form-control form-control-lg mb-3' />
