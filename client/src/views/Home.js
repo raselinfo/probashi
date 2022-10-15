@@ -1,12 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from "react-router-dom"
 import QRCode from "react-qr-code"
+import { useReactToPrint } from 'react-to-print';
 const Home = () => {
     const { id } = useParams()
     const [userInfo, setUserInfo] = useState(null)
     const [loading, setLoading] = useState(true)
     const [message, setMessage] = useState("")
-    const userLink = window.location.href
+    const userLink = window.location.href;
+    const componentRef = useRef();
+    const handlePrint = useReactToPrint({
+        content: () => componentRef.current,
+        documentTitle:"Probashi Data",
+        onAfterPrint:()=>alert("Print Successful 😎")
+    });
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -36,13 +44,13 @@ const Home = () => {
     console.log(userLink)
 
     return (
-        <section className="qr_section py-5">
+        <section className="qr_section py-5" >
             <div className="container">
                 <div className="row">
                     <div className="col-12">
                         {/* QR button start  */}
                         <div className="certificate_button text-end">
-                            <span className='print-icon font-bold' >
+                            <span onClick={handlePrint} className='print-icon font-bold' >
                                 <i className="fa-solid fa-print"></i>
                             </span>
                         </div>
@@ -56,7 +64,7 @@ const Home = () => {
                                 </h3>
                                 <div className="row">
                                     <div className="col-lg-6 offset-lg-3">
-                                        <div className="qr_item">
+                                        <div className="qr_item" ref={componentRef}>
                                             {/* TOP */}
                                             <div className="qr_top text-white">
                                                 <div className="row">
@@ -66,7 +74,7 @@ const Home = () => {
                                                         <h6>Certificate No: {userInfo?._id}</h6>
                                                     </div>
                                                     <div className='col-md-6'>
-                                                        <div className="qr_code col-md-4" style={{ background: 'white', padding: '15',marginLeft:"auto" }}>
+                                                        <div className="qr_code col-md-4" style={{ background: 'white', padding: '15', marginLeft: "auto" }}>
                                                             <QRCode
                                                                 size={256}
                                                                 value={userLink}
