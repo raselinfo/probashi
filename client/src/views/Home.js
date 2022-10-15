@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from "react-router-dom"
 import QRCode from "react-qr-code"
 import { useReactToPrint } from 'react-to-print';
+
 const Home = () => {
     const { id } = useParams()
     const [userInfo, setUserInfo] = useState(null)
@@ -11,9 +12,11 @@ const Home = () => {
     const componentRef = useRef();
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
-        documentTitle:"Probashi Data",
-        onAfterPrint:()=>alert("Print Successful 😎")
+        documentTitle: "Probashi Data",
+        onAfterPrint: () => alert("Print Successful 😎"),
+        copyStyles: true
     });
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -44,7 +47,8 @@ const Home = () => {
     console.log(userLink)
 
     return (
-        <section className="qr_section py-5" >
+        <section className="qr_section py-5" ref={componentRef}>
+
             <div className="container">
                 <div className="row">
                     <div className="col-12">
@@ -59,27 +63,29 @@ const Home = () => {
                         {/* Certificate content start */}
                         {
                             loading ? <h1>Loading</h1> : (<div className="qr_content">
-                                <h3 className="text-center success_text text-success">
+                                <h3 className="qr-message text-center success_text text-success">
                                     {message}
                                 </h3>
                                 <div className="row">
                                     <div className="col-lg-6 offset-lg-3">
-                                        <div className="qr_item" ref={componentRef}>
+                                        <div className="qr_item">
                                             {/* TOP */}
                                             <div className="qr_top text-white">
-                                                <div className="row">
-                                                    <div className="col-md-6">
+                                                <div className="details__wapper">
+                                                    <div className="left">
                                                         <h4 style={{ fontSize: "30px" }}>House Keeping</h4>
                                                         <h5>{userInfo?.address}</h5>
                                                         <h6>Certificate No: {userInfo?._id}</h6>
                                                     </div>
-                                                    <div className='col-md-6'>
-                                                        <div className="qr_code col-md-4" style={{ background: 'white', padding: '15', marginLeft: "auto" }}>
+                                                    <div className='right'>
+                                                        <div className="qr_code " style={{ background: 'white', marginLeft: "auto" }}>
                                                             <QRCode
                                                                 size={256}
                                                                 value={userLink}
                                                                 style={{ height: "auto", maxWidth: "100%", width: "100%" }}
                                                                 viewBox={`0 0 256 256`}
+                                                                fgColor="#416D7A"
+
                                                             />
                                                         </div>
                                                     </div>

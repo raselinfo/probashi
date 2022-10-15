@@ -335,7 +335,75 @@ body {
 }
 
 .qr_code {
-  width : 100%;
-  height: auto;
-  padding:10px;
+  width  : 100%;
+  height : auto;
+  padding: 10px;
+}
+
+/* @media print {
+  .qr_item {
+    display: block;
+  }
+} */
+
+@media all {
+  .page-break {
+    display: none;
+  }
+}
+
+@media print {
+
+  html,
+  body {
+    height                    : initial !important;
+    overflow                  : initial !important;
+    -webkit-print-color-adjust: exact;
+  }
+}
+
+@media print {
+  .page-break {
+    margin-top       : 1rem;
+    display          : block;
+    page-break-before: auto;
+  }
+
+  .certificate_button {
+    display: none;
+  }
+
+  .qr-message {
+    display: none;
+  }
+
+  .qr-code {
+    width: 200px;
+  }
+}
+
+@page {
+  size  : auto;
+  margin: 20mm;
+}
+
+.qr_code {
+  width: 100px;
+}
+
+.details__wapper {
+  display        : flex;
+  justify-content: space-between;
+}
+
+@media only screen and (max-width: 424px) {
+  .details__wapper {
+    display       : flex;
+    flex-direction: column;
+  }
+
+  .qr_code {
+    max-width: 100% !important;
+    width:300px;
+  }
 }
