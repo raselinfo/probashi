@@ -6,6 +6,6 @@ const router = require("express").Router()
 router.post("/create-user", authMiddleware.isAuth, usersController.createUser)
 router.get("/get-users", authMiddleware.isAuth, usersController.getUsers)
 
-
+router.get("/get-user/:id", usersController.getUser)
 
 module.exports = router;
