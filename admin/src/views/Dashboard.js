@@ -77,7 +77,7 @@ const Dashboard = () => {
             }
         }
         fetchData()
-    }, [user])
+    }, [user, userLink])
 
     return (
         <section>
