@@ -333,3 +333,9 @@ body {
   border-radius: 50%;
 
 }
+
+.qr_code {
+  width : 100%;
+  height: auto;
+  padding:10px;
+}

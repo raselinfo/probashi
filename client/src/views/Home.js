@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom"
+import QRCode from "react-qr-code"
 const Home = () => {
     const { id } = useParams()
     const [userInfo, setUserInfo] = useState(null)
     const [loading, setLoading] = useState(true)
     const [message, setMessage] = useState("")
+    const userLink = window.location.href
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -28,7 +30,11 @@ const Home = () => {
             }
         }
         fetchData()
+        console.log("fist effect")
     }, [id])
+
+    console.log(userLink)
+
     return (
         <section className="qr_section py-5">
             <div className="container">
@@ -54,15 +60,25 @@ const Home = () => {
                                             {/* TOP */}
                                             <div className="qr_top text-white">
                                                 <div className="row">
-                                                    <div className="col-9">
-                                                        <h4>House Keeping</h4>
+                                                    <div className="col-md-6">
+                                                        <h4 style={{ fontSize: "30px" }}>House Keeping</h4>
                                                         <h5>{userInfo?.address}</h5>
                                                         <h6>Certificate No: {userInfo?._id}</h6>
                                                     </div>
-                                                    <div className="col-3">
-                                                        QR Code
+                                                    <div className='col-md-6'>
+                                                        <div className="qr_code col-md-4" style={{ background: 'white', padding: '15',marginLeft:"auto" }}>
+                                                            <QRCode
+                                                                size={256}
+                                                                value={userLink}
+                                                                style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+                                                                viewBox={`0 0 256 256`}
+                                                            />
+                                                        </div>
                                                     </div>
+
                                                 </div>
+
+
                                             </div>
                                             {/* Top end  */}
                                             <div className="qr_bottom">
