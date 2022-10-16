@@ -9,13 +9,15 @@ const Dashboard = () => {
     const [loading, setLoading] = useState(false)
     const [totalUser, setTotalUser] = useState(0)
     const [userLink, setUserLink] = useState("")
-    const currentDate = `${date.toLocaleDateString()}`
+    // July 31, 2022
+    const currentDate = `${date.toLocaleDateString('en-us', { month: "long", day: "numeric", year: "numeric" })}`
     const [probashiInfo, setProbashiInfo] = useState({
         name: "",
         fatherName: "",
         motherName: "",
         address: "",
-        issueDate: currentDate
+        issueDate: currentDate,
+        certificate: ""
     })
 
     // Copy Text Handler
@@ -26,7 +28,7 @@ const Dashboard = () => {
     const createProbashi = async (e) => {
         e.preventDefault()
         setLoading(true)
-        if (!probashiInfo.name || !probashiInfo.fatherName || !probashiInfo.motherName || !probashiInfo.address || !probashiInfo.issueDate) {
+        if (!probashiInfo.name || !probashiInfo.fatherName || !probashiInfo.motherName || !probashiInfo.address || !probashiInfo.issueDate || !probashiInfo.certificate) {
             alert("Please fil up all data! ❌")
             setLoading(false)
             return
@@ -44,6 +46,7 @@ const Dashboard = () => {
             setUserLink(data?.data)
             setLoading(false)
         } catch (err) {
+            console.log(err)
             setMessage(err.message)
             setLoading(false)
         }
@@ -94,7 +97,7 @@ const Dashboard = () => {
                         মোট প্রবাসীঃ {totalUser} জন
                     </div>
                     {/* User Link */}
-                    {userLink && (<> <a rel="noreferrer" target={"_blank"} href={ userLink } className="user__link mr-3">View Link</a>
+                    {userLink && (<> <a rel="noreferrer" target={"_blank"} href={userLink} className="user__link mr-3">View Link</a>
                         <button onClick={copyTextHandler} className="copy__link btn btn-success">Copy Link</button>
                         <hr /></>)}
                     <h2 className='probashi_form_heading'>প্রবাসী রেজিস্ট্রেশন</h2>
@@ -110,6 +113,10 @@ const Dashboard = () => {
                         <div>
                             <label htmlFor="mother">Mother's Name*</label>
                             <input onChange={(e) => setProbashiInfo({ ...probashiInfo, motherName: e.target.value })} type="text" name="mother" id="mother" className='form-control from-control-lg' required />
+                        </div>
+                        <div>
+                            <label htmlFor="certificate">Certificate No: *</label>
+                            <input onChange={(e) => setProbashiInfo({ ...probashiInfo, certificate: e.target.value })} type="text" name="certificate" id="certificate" className='form-control from-control-lg' required />
                         </div>
                         <div>
                             <label htmlFor="address">Address*</label>
