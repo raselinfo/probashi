@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from "react-router-dom"
 import QRCode from "react-qr-code"
 import { useReactToPrint } from 'react-to-print';
-
+import Print from "../assets/print.png"
 const Home = () => {
     const { id } = useParams()
     const [userInfo, setUserInfo] = useState(null)
@@ -16,6 +16,7 @@ const Home = () => {
         onAfterPrint: () => alert("Print Successful 😎"),
         copyStyles: true
     });
+    console.log(userInfo)
 
 
     useEffect(() => {
@@ -55,7 +56,7 @@ const Home = () => {
                         {/* QR button start  */}
                         <div className="certificate_button text-end">
                             <span onClick={handlePrint} className='print-icon font-bold' >
-                                <i className="fa-solid fa-print"></i>
+                                <img src={Print} alt="print" />
                             </span>
                         </div>
 
@@ -75,16 +76,17 @@ const Home = () => {
                                                     <div className="left">
                                                         <h4>House Keeping</h4>
                                                         <h5>{userInfo?.address}</h5>
-                                                        <h6>Certificate No: {userInfo?._id}</h6>
+                                                        <h6>Certificate No: {userInfo?.certificate}</h6>
                                                     </div>
                                                     <div className='right'>
-                                                        <div className="qr_code " style={{ background: 'white', marginLeft: "auto" }}>
+                                                        <div className="qr_code " style={{ background: '#2e736fed', marginLeft: "auto" }}>
                                                             <QRCode
                                                                 size={256}
                                                                 value={userLink}
                                                                 style={{ height: "auto", maxWidth: "100%", width: "100%" }}
                                                                 viewBox={`0 0 256 256`}
-                                                                fgColor="#416D7A"
+                                                                fgColor="#fff"
+                                                                bgColor='#2e736fed'
 
                                                             />
                                                         </div>

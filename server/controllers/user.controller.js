@@ -2,7 +2,8 @@ const User = require("../models/user.model")
 const usersController = {
     // Create User
     async createUser(req, res) {
-        const { name, fatherName, motherName, address, issueDate } = req.body
+        const { name, fatherName, motherName, address, issueDate, certificate } = req.body
+        console.log("Body", req.body)
         if (!name || !fatherName || !motherName || !address || !issueDate) {
             return res.status(400).json({ message: "All fields are required!" })
         }
@@ -12,7 +13,8 @@ const usersController = {
                 fatherName,
                 motherName,
                 address,
-                issueDate
+                issueDate,
+                certificate
             })
             const newUser = await user.save()
             const url = `${process.env.CLIENT_URL}/c/t/${newUser._id}`
@@ -23,7 +25,6 @@ const usersController = {
     },
     // Get all users
     async getUsers(_req, res) {
-        console.log("hello")
         try {
             const users = await User.find()
             console.log("user", users)
@@ -40,7 +41,7 @@ const usersController = {
             if (!user) {
                 return res.status(404).json({ message: "User not found!" })
             }
-            console.log(user)
+            console.log("Single User", user)
             res.status(200).json({ message: " Successful Trainee Information", data: user })
         } catch (err) {
             res.status(500).json({ message: err.message })
