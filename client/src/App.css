@@ -388,7 +388,8 @@ body {
 }
 
 .qr_code {
-  width: 100px;
+  width  : 100px;
+  padding: 3px;
 }
 
 .details__wapper {
@@ -397,13 +398,7 @@ body {
 }
 
 @media only screen and (max-width: 424px) {
-  .details__wapper {
-    display       : flex;
-    flex-direction: column;
-  }
-
   .qr_code {
-    max-width: 100% !important;
-    width:300px;
+    width: 70px;
   }
 }

@@ -73,7 +73,7 @@ const Home = () => {
                                             <div className="qr_top text-white">
                                                 <div className="details__wapper">
                                                     <div className="left">
-                                                        <h4 style={{ fontSize: "30px" }}>House Keeping</h4>
+                                                        <h4>House Keeping</h4>
                                                         <h5>{userInfo?.address}</h5>
                                                         <h6>Certificate No: {userInfo?._id}</h6>
                                                     </div>
